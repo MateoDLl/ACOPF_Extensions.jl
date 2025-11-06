@@ -24,21 +24,21 @@ using Test
         
         # without reactive compensation
         topology = zeros(Int64,15,1)
-        topology[9,1] = 1
-        topology[11,1] = 1
-        topology[14,1] = 2
-        result1, fobj1, state1, rc1 = run_acopf_topology(system, topology; rc=false)
-        @test isa(fobj1, Real)
-        @test isapprox(fobj1, 110.44; atol=1e2)
-
-        # with reactive compensation
-        topology = zeros(Int64,15,1)
         topology[9,1] = 2
         topology[11,1] = 2
         topology[14,1] = 2
+        result1, fobj1, state1, rc1 = run_acopf_topology(system, topology; rc=false)
+        @test isa(fobj1, Real)
+        @test isapprox(fobj1, 160.0; atol=1e2)
+
+        # with reactive compensation
+        topology = zeros(Int64,15,1)
+        topology[9,1] = 1
+        topology[11,1] = 1
+        topology[14,1] = 2
         result2, fobj2, state2, rc2 = run_acopf_topology(system, topology; rc=true)
         @test isa(fobj2, Real)
-        @test isapprox(fobj2, 160.0; atol=1e2)
+        @test isapprox(fobj2, 110.44; atol=1e2)
     end
 
 end
