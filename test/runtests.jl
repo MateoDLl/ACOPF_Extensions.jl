@@ -2,7 +2,7 @@ using ACOPF_Extensions
 using Test
 
 @testset "ACOPF_Extensions.jl" begin
-    system = "case/garverQ"
+    system = "test/case/garverQ"
 
     @testset "run_acopf_topology: interface tests" begin
         
