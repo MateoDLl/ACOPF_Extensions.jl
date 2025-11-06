@@ -6,8 +6,8 @@ topology = zeros(Int64,15,1)
 topology[9,1] = 1
 topology[11,1] = 1
 topology[14,1] = 2
-result2, fobj2, state2, rc2 = run_acopf_topology(system, topology; rc=true)
+result, fobj, state, rc = run_acopf_topology(system, topology; rc=true)
 
 println("Objective value: ", fobj)
 println("Optimization state: ", state)
-println("Reactive compensation: ", rc2)
+println("Reactive compensation: ", rc)
