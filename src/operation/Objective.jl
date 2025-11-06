@@ -35,20 +35,20 @@ function objective_min_cost_RCN1(pm::_PM.AbstractPowerModel)
     end
 
     # Maximum values for each variable
-    @variable(pm.model, gen_cost_max[n_i in keys(first(values(gen_cost)))] )
-    @variable(pm.model, comp_cost_max[n_i in keys(first(values(comp_cost)))] )
-    @variable(pm.model, art_penalty_max[n_i in keys(first(values(art_penalty)))] )
+    JuMP.@variable(pm.model, gen_cost_max[n_i in keys(first(values(gen_cost)))] )
+    JuMP.@variable(pm.model, comp_cost_max[n_i in keys(first(values(comp_cost)))] )
+    JuMP.@variable(pm.model, art_penalty_max[n_i in keys(first(values(art_penalty)))] )
 
     # Define a max value
     for (km, _) in _PM.nws(pm)
         for n_i in keys(gen_cost[km])
-            @constraint(pm.model, gen_cost_max[n_i] >= gen_cost[km][n_i])
+            JuMP.@constraint(pm.model, gen_cost_max[n_i] >= gen_cost[km][n_i])
         end
         for n_i in keys(comp_cost[km])
-            @constraint(pm.model, comp_cost_max[n_i] >= comp_cost[km][n_i])
+            JuMP.@constraint(pm.model, comp_cost_max[n_i] >= comp_cost[km][n_i])
         end
         for n_i in keys(art_penalty[km])
-            @constraint(pm.model, art_penalty_max[n_i] >= art_penalty[km][n_i])
+            JuMP.@constraint(pm.model, art_penalty_max[n_i] >= art_penalty[km][n_i])
         end
     end
 
@@ -57,7 +57,7 @@ function objective_min_cost_RCN1(pm::_PM.AbstractPowerModel)
     else
         cst_exp = sum(nw_ref[:Cost_Expansion] for (_, nw_ref) in _PM.nws(pm)[:0])
     end
-    @objective(pm.model, Min,
+    JuMP.@objective(pm.model, Min,
         cst_exp +
         sum(gen_cost_max[n_i] for n_i in keys(gen_cost_max)) +
         sum(comp_cost_max[n_i] for n_i in keys(comp_cost_max)) +
@@ -92,16 +92,16 @@ function objective_min_cost_RCN1_nrc(pm::_PM.AbstractPowerModel)
     end
 
     # Maximum values for each variable
-    @variable(pm.model, gen_cost_max[n_i in keys(first(values(gen_cost)))] )
-    @variable(pm.model, art_penalty_max[n_i in keys(first(values(art_penalty)))] )
+    JuMP.@variable(pm.model, gen_cost_max[n_i in keys(first(values(gen_cost)))] )
+    JuMP.@variable(pm.model, art_penalty_max[n_i in keys(first(values(art_penalty)))] )
 
     # Define a max value
     for (km, _) in _PM.nws(pm)
         for n_i in keys(gen_cost[km])
-            @constraint(pm.model, gen_cost_max[n_i] >= gen_cost[km][n_i])
+            JuMP.@constraint(pm.model, gen_cost_max[n_i] >= gen_cost[km][n_i])
         end
         for n_i in keys(art_penalty[km])
-            @constraint(pm.model, art_penalty_max[n_i] >= art_penalty[km][n_i])
+            JuMP.@constraint(pm.model, art_penalty_max[n_i] >= art_penalty[km][n_i])
         end
     end
 
@@ -111,7 +111,7 @@ function objective_min_cost_RCN1_nrc(pm::_PM.AbstractPowerModel)
         cst_exp = sum(nw_ref[:Cost_Expansion] for (_, nw_ref) in _PM.nws(pm)[:0])
     end
 
-    @objective(pm.model, Min,
+    JuMP.@objective(pm.model, Min,
         cst_exp +
         sum(gen_cost_max[n_i] for n_i in keys(gen_cost_max)) +
         sum(art_penalty_max[n_i] for n_i in keys(art_penalty_max))
@@ -141,12 +141,12 @@ function objective_min_cost_RCN1_nRC_nAP(pm::_PM.AbstractPowerModel)
     end
 
     # Maximum values for each variable
-    @variable(pm.model, gen_cost_max[n_i in keys(first(values(gen_cost)))] )
+    JuMP.@variable(pm.model, gen_cost_max[n_i in keys(first(values(gen_cost)))] )
 
     # Define a max value
     for (km, _) in _PM.nws(pm)
         for n_i in keys(gen_cost[km])
-            @constraint(pm.model, gen_cost_max[n_i] >= gen_cost[km][n_i])
+            JuMP.@constraint(pm.model, gen_cost_max[n_i] >= gen_cost[km][n_i])
         end
     end
 
@@ -155,7 +155,7 @@ function objective_min_cost_RCN1_nRC_nAP(pm::_PM.AbstractPowerModel)
     else
         cst_exp = sum(nw_ref[:Cost_Expansion] for (_, nw_ref) in _PM.nws(pm)[:0])
     end
-    @objective(pm.model, Min,
+    JuMP.@objective(pm.model, Min,
         cst_exp +
         sum(gen_cost_max[n_i] for n_i in keys(gen_cost_max))
     )    
@@ -188,16 +188,16 @@ function objective_min_cost_RCN1_nAP(pm::_PM.AbstractPowerModel)
     end
 
     # Maximum values for each variable
-    @variable(pm.model, gen_cost_max[n_i in keys(first(values(gen_cost)))] )
-    @variable(pm.model, comp_cost_max[n_i in keys(first(values(comp_cost)))] )
+    JuMP.@variable(pm.model, gen_cost_max[n_i in keys(first(values(gen_cost)))] )
+    JuMP.@variable(pm.model, comp_cost_max[n_i in keys(first(values(comp_cost)))] )
 
     # Define a max value
     for (km, _) in _PM.nws(pm)
         for n_i in keys(gen_cost[km])
-            @constraint(pm.model, gen_cost_max[n_i] >= gen_cost[km][n_i])
+            JuMP.@constraint(pm.model, gen_cost_max[n_i] >= gen_cost[km][n_i])
         end
         for n_i in keys(comp_cost[km])
-            @constraint(pm.model, comp_cost_max[n_i] >= comp_cost[km][n_i])
+            JuMP.@constraint(pm.model, comp_cost_max[n_i] >= comp_cost[km][n_i])
         end
     end
 
@@ -206,7 +206,7 @@ function objective_min_cost_RCN1_nAP(pm::_PM.AbstractPowerModel)
     else
         cst_exp = sum(nw_ref[:Cost_Expansion] for (_, nw_ref) in _PM.nws(pm)[:0])
     end
-    @objective(pm.model, Min,
+    JuMP.@objective(pm.model, Min,
         cst_exp +
         sum(gen_cost_max[n_i] for n_i in keys(gen_cost_max)) +
         sum(comp_cost_max[n_i] for n_i in keys(comp_cost_max))
