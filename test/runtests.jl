@@ -1,9 +1,15 @@
 using ACOPF_Extensions
-using Test
+using Test, MathOptInterface
+const MOI = MathOptInterface
 
 @testset "ACOPF_Extensions.jl" begin
     system = "test/case/garverQ"
-
+    valid_states = [
+        MOI.OPTIMAL,
+        MOI.LOCALLY_SOLVED,
+        MOI.ALMOST_OPTIMAL,
+        MOI.ALMOST_LOCALLY_SOLVED
+    ]
     @testset "run_acopf_topology: interface tests" begin
         
         topology = zeros(Int64,15,1)
@@ -13,7 +19,7 @@ using Test
 
         @test isa(result, Dict)
         @test isa(fobj, Real)
-        @test isa(state, Real)
+        @test isa(state, MOI.TerminationStatusCode)
         @test isa(rc_nodes, Dict)
 
         @test !isnan(fobj)
@@ -29,6 +35,7 @@ using Test
         topology[14,1] = 2
         result1, fobj1, state1, rc1 = run_acopf_topology(system, topology; rc=false)
         @test isa(fobj1, Real)
+        @test state1 in valid_states
         @test isapprox(fobj1, 160.0; atol=1e2)
 
         # with reactive compensation
@@ -38,6 +45,7 @@ using Test
         topology[14,1] = 2
         result2, fobj2, state2, rc2 = run_acopf_topology(system, topology; rc=true)
         @test isa(fobj2, Real)
+        @test state1 in valid_states
         @test isapprox(fobj2, 110.44; atol=1e2)
     end
 
