@@ -32,17 +32,3 @@ function run_acopf_ag_topology(system::String,topology::Matrix{Int};
     end
     return result, fobj, state, rc_nodes
 end
-
-
-
-
-
-SolT = case["Inicial_Top"]
-SolT[9,1] = 4
-SolT[11,1] = 1
-SolT[14,1] = 2
-SolT[15,1] = 1
-
-
-
-println("R1:$(round(obj1,digits=2)),$(st1)    R2:$(round(obj2,digits=2)),$(st2)")
