@@ -26,7 +26,6 @@ function setup_case(namefile::String, reactive::Bool, contingency::Bool;
     case_data["Period_Stage"] = [1]
     case_data["Mat_cost"] = Calculate_Mat_Cost(case_data)
     case_data["solver_Us"] = JuMP.optimizer_with_attributes(Ipopt.Optimizer, "print_level" => 0,"max_iter" => 500, "sb" => "yes")
-    case_data["title"] = namefile * "_" * fecha_str_clean
     case_data["nlines"] = length(case_data["Mat_cost"])
     case_data["Inicial_Top"] = zeros(case_data["nlines"],Stage) 
     case_data["Unct"] = false
