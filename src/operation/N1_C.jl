@@ -526,7 +526,7 @@ function solve_tnep_N1_idx_nrc(data::Dict, SolT::Matrix; subgra::Bool=false)
     # indx_nodes = extract_idx(dataR["nw"], result["solution"]["nw"], Stage, calcular_subgrafos=subgra)
     rcct = Dict()
 
-    return result["solution"]["nw"], result["objective"], Int(result["termination_status"]) , rcct, rcct
+    return result["solution"]["nw"], result["objective"], result["termination_status"] , rcct, rcct
 end
 
 function solve_tnep_N1_idx_rc(data::Dict, SolT::Matrix; subgra::Bool=false) 
@@ -540,7 +540,7 @@ function solve_tnep_N1_idx_rc(data::Dict, SolT::Matrix; subgra::Bool=false)
     # indx_nodes = extract_idx(dataR["nw"], result["solution"]["nw"], Stage, calcular_subgrafos=subgra)
     rcct = extract_rc_nodes(data, result["solution"]["nw"], Stage)
     
-    return result["solution"]["nw"], result["objective"], Int(result["termination_status"]) , rcct, rcct
+    return result["solution"]["nw"], result["objective"], result["termination_status"] , rcct, rcct
 end
 
 function solve_tnep_N1_idx_nrc_AP(data::Dict, SolT::Matrix; subgra::Bool=false)
@@ -554,7 +554,7 @@ function solve_tnep_N1_idx_nrc_AP(data::Dict, SolT::Matrix; subgra::Bool=false)
     # indx_nodes = extract_idx(dataR["nw"], result["solution"]["nw"], Stage, calcular_subgrafos=subgra)
     rcct = Dict()
 
-    return result["solution"]["nw"], result["objective"], Int(result["termination_status"]) , rcct, rcct
+    return result["solution"]["nw"], result["objective"], result["termination_status"] , rcct, rcct
 end
 
 function solve_tnep_N1_idx_rc_AP(data::Dict, SolT::Matrix; subgra::Bool=false) 
@@ -568,7 +568,7 @@ function solve_tnep_N1_idx_rc_AP(data::Dict, SolT::Matrix; subgra::Bool=false)
     # indx_nodes = extract_idx(dataR["nw"], result["solution"]["nw"], Stage, calcular_subgrafos=subgra)
     rcct = extract_rc_nodes(data, result["solution"]["nw"], Stage)
     
-    return result["solution"]["nw"], result["objective"], Int(result["termination_status"]) , rcct, rcct
+    return result["solution"]["nw"], result["objective"], result["termination_status"] , rcct, rcct
 end
 
 function uncertain(sn_data::Dict)
