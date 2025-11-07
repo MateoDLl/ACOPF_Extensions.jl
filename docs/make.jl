@@ -8,7 +8,7 @@ makedocs(;
     authors="Mateo Llivisaca",
     sitename="ACOPF_Extensions.jl",
     format=Documenter.HTML(;
-        canonical="https://mateollivisaca.github.io/ACOPF_Extensions.jl",
+        canonical="https://MateoDLl.github.io/ACOPF_Extensions.jl",
         edit_link="master",
         assets=String[],
     ),
@@ -18,7 +18,7 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/mateollivisaca/ACOPF_Extensions.jl",
+    repo="github.com/MateoDLl/ACOPF_Extensions.jl",
     branch="gh-pages",   
     devbranch="master",
 )

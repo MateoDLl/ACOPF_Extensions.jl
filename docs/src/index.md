@@ -4,7 +4,7 @@ CurrentModule = ACOPF_Extensions
 
 # ACOPF_Extensions
 
-Documentation for [ACOPF_Extensions](https://github.com/mateollivisaca/ACOPF_Extensions.jl).
+Documentation for [ACOPF_Extensions](https://github.com/MateoDLl/ACOPF_Extensions.jl.git).
 
 ```@index
 ```
@@ -25,6 +25,7 @@ with extended modeling features such as:
 
 ```julia
 using Pkg
-Pkg.add(url="https://github.com/mateollivisaca/ACOPF_Extensions.jl")
+Pkg.add(url="https://github.com/MateoDLl/ACOPF_Extensions.jl.git")
+```
 
 

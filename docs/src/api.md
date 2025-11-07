@@ -11,7 +11,7 @@ To install the package, use the Julia package manager:
 
 ```julia
 using Pkg
-Pkg.add(url="https://github.com/mateollivisaca/ACOPF_Extensions.jl") 
+Pkg.add(url="https://github.com/MateoDLl/ACOPF_Extensions.jl.git") 
 ```
 
 ---
