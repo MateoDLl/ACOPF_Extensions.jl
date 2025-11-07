@@ -3,8 +3,8 @@ using Test, MathOptInterface
 const MOI = MathOptInterface
 
 @testset "ACOPF_Extensions.jl" begin
-    system = joinpath(@__DIR__, "case", "garverQ")
-    system2 = joinpath(@__DIR__, "case", "case24IEEE_P_Glo_r_no")
+    system = joinpath(@__DIR__,"..", "case", "garverQ")
+    system2 = joinpath(@__DIR__,"..", "case", "case24IEEE_P_Glo_r_no")
     valid_states = [
         MOI.OPTIMAL,
         MOI.LOCALLY_SOLVED,
