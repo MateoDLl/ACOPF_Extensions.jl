@@ -1,9 +1,9 @@
 # ACOPF_Extensions
 
 [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://github.com/MateoDLl/ACOPF_Extensions.jl/stable/)
-[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://mateollivisaca.github.io/ACOPF_Extensions.jl/dev/)
+[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://MateoDLl.github.io/ACOPF_Extensions.jl/dev/)
 [![Build Status](https://github.com/MateoDLl/ACOPF_Extensions.jl/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/MateoDLl/ACOPF_Extensions.jl/actions/workflows/CI.yml?query=branch%3Amaster)
-[![Coverage](https://codecov.io/gh/mateollivisaca/ACOPF_Extensions.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/mateollivisaca/ACOPF_Extensions.jl)
+[![Coverage](https://codecov.io/gh/MateoDLl/ACOPF_Extensions.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/mateollivisaca/ACOPF_Extensions.jl)
 
 A Julia package designed to extend and customize AC Optimal Power Flow (ACOPF) formulations within the [PowerModels.jl].
 
