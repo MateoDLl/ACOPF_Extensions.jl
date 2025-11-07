@@ -1,6 +1,7 @@
 using ACOPF_Extensions
 
-system = "examples/case/garverQ"
+system = joinpath(@__DIR__, "case", "garverQ")
+system2 = joinpath(@__DIR__, "case", "case24IEEE_P_Glo_r_no")
 
 topology = zeros(Int64,15,1)
 topology[9,1] = 1
@@ -17,3 +18,17 @@ result_ag, fobj_ag, state_ag, rc_ag = run_acopf_ag_topology(system, topology; rc
 println("Objective value: ", fobj_ag)
 println("Optimization state: ", state_ag)
 println("Reactive compensation: ", rc_ag)
+
+topology = zeros(Int64,41,1)
+topology[13,1] = 1
+topology[14,1] = 2
+topology[25,1] = 1
+result1, fobj1, state1, rc1 = run_acopf_topology(system2, topology; rc=false)
+println("Objective value: ", fobj1)
+println("Optimization state: ", state1)
+println("Reactive compensation: ", rc1)
+
+result1_ag, fobj1_ag, state1_ag, rc1_ag = run_acopf_ag_topology(system2, topology; rc=false)
+println("Objective value: ", fobj1_ag)
+println("Optimization state: ", state1_ag)
+println("Reactive compensation: ", rc1_ag)

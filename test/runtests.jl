@@ -4,6 +4,7 @@ const MOI = MathOptInterface
 
 @testset "ACOPF_Extensions.jl" begin
     system = joinpath(@__DIR__, "case", "garverQ")
+    system2 = joinpath(@__DIR__, "case", "case24IEEE_P_Glo_r_no")
     valid_states = [
         MOI.OPTIMAL,
         MOI.LOCALLY_SOLVED,
@@ -47,6 +48,16 @@ const MOI = MathOptInterface
         @test isa(fobj2, Real)
         @test state1 in valid_states
         @test isapprox(fobj2, 110.44; atol=1e2)
+
+        # without reactive compensation
+        topology = zeros(Int64,41,1)
+        topology[13,1] = 1
+        topology[14,1] = 2
+        topology[25,1] = 1
+        result1, fobj1, state1, rc1 = run_acopf_topology(system2, topology; rc=false)
+        @test isa(fobj1, Real)
+        @test state1 in valid_states
+        @test isapprox(fobj1, 110.0; atol=1e2)
     end
 
 end
