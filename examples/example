@@ -11,3 +11,9 @@ result, fobj, state, rc = run_acopf_topology(system, topology; rc=true)
 println("Objective value: ", fobj)
 println("Optimization state: ", state)
 println("Reactive compensation: ", rc)
+
+result_ag, fobj_ag, state_ag, rc_ag = run_acopf_ag_topology(system, topology; rc=true)
+
+println("Objective value: ", fobj_ag)
+println("Optimization state: ", state_ag)
+println("Reactive compensation: ", rc_ag)
