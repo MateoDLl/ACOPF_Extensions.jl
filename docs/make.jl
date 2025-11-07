@@ -1,5 +1,5 @@
-using ACOPF_Extensions
 using Documenter
+using ACOPF_Extensions
 
 DocMeta.setdocmeta!(ACOPF_Extensions, :DocTestSetup, :(using ACOPF_Extensions); recursive=true)
 
@@ -19,5 +19,6 @@ makedocs(;
 
 deploydocs(;
     repo="github.com/mateollivisaca/ACOPF_Extensions.jl",
+    branch="gh-pages",   
     devbranch="master",
 )
