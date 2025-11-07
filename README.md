@@ -5,6 +5,8 @@
 [![Build Status](https://github.com/mateollivisaca/ACOPF_Extensions.jl/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/mateollivisaca/ACOPF_Extensions.jl/actions/workflows/CI.yml?query=branch%3Amaster)
 [![Coverage](https://codecov.io/gh/mateollivisaca/ACOPF_Extensions.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/mateollivisaca/ACOPF_Extensions.jl)
 
+A Julia package designed to extend and customize AC Optimal Power Flow (ACOPF) formulations within the [PowerModels.jl].
+
 ## Install
 ```julia
 using Pkg
