@@ -35,6 +35,7 @@ topology[11,1] = 1
 topology[14,1] = 2
 
 result, fobj, state, rc_nodes = run_acopf_topology(system, topology; n1=true) 
+```julia
 """
 function run_acopf_topology(system::String,topology::Matrix{Int};
     rc::Bool=false,n1::Bool=false,
@@ -92,6 +93,7 @@ topology[11,1] = 1
 topology[14,1] = 2
 
 result, fobj, state, rc_nodes = run_acopf_ag_topology(system, topology; rc=true)
+```julia
 """
 function run_acopf_ag_topology(system::String,topology::Matrix{Int};
     rc::Bool=false,n1::Bool=false,
