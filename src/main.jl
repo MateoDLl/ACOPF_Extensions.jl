@@ -54,6 +54,15 @@ function run_acopf_topology(system::String,topology::Matrix{Int};
 end
 
 
+function run_acopf_topology(case::Dict,topology::Matrix{Int})  
+    if case["ReactiveCompensation"] 
+        result, fobj, state, rc_nodes, _ = solve_tnep_N1_idx_rc(case, topology)
+    else
+        result, fobj, state, rc_nodes, _ = solve_tnep_N1_idx_nrc(case, topology)
+    end
+    return result, fobj, state, rc_nodes
+end
+
 """
     run_acopf_ag_topology(system::Dict, topology::Matrix{Int};
         rc::Bool=false, n1::Bool=false,
@@ -104,6 +113,16 @@ function run_acopf_ag_topology(system::String,topology::Matrix{Int};
     case = setup_case(system, rc, n1,
             Stage=stages,growth_rate=grate, d_rate=drate, years_stage=yp)
     if rc 
+        result, fobj, state, rc_nodes, _ = solve_tnep_N1_idx_rc_AP(case, topology)
+    else
+        result, fobj, state, rc_nodes, _ = solve_tnep_N1_idx_nrc_AP(case, topology)
+    end
+    return result, fobj, state, rc_nodes
+end
+
+
+function run_acopf_ag_topology(case::Dict,topology::Matrix{Int})  
+    if case["ReactiveCompensation"] 
         result, fobj, state, rc_nodes, _ = solve_tnep_N1_idx_rc_AP(case, topology)
     else
         result, fobj, state, rc_nodes, _ = solve_tnep_N1_idx_nrc_AP(case, topology)
