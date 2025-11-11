@@ -1,4 +1,3 @@
-
 """
     run_acopf_topology(system::Dict, topology::Matrix{Int};
         rc::Bool=false, n1::Bool=false,
@@ -14,8 +13,8 @@ demand/generation growth over multiple stages.
   activation per stage (1 = active, 0 = inactive).
 - `rc::Bool=false`: If `true`, includes the model with component replacement.
 - `n1::Bool=false`: If `true`, activates N-1 contingency constraints.
-- `drate::Float64=20.0`: Line dismantling or deactivation rate (%).
-- `grate::Float64=10.0`: Load or generation growth rate (%).
+- `drate::Float64=20.0`: Discount rate (%).
+- `grate::Float64=10.0`: Load and generation growth rate (%).
 - `yp::Int=1`: Number of years per planning stage.
 
 # Returns
@@ -23,7 +22,7 @@ A tuple with:
 1. `result` — Dictionary with the optimization results.
 2. `fobj` — Objective value (total expansion or operation cost).
 3. `state` — Solver termination status (`MathOptInterface.TerminationStatusCode`).
-4. `rc_nodes` — Nodes replaced or updated (if `rc = true`).
+4. `rc_nodes` — Nodes and amounth of RC p.u. [MVAR].
 
 # Example
 ```julia
@@ -35,8 +34,8 @@ topology[9,1] = 1
 topology[11,1] = 1
 topology[14,1] = 2
 
-result, fobj, state, rc_nodes = run_acopf_topology(system, topology; n1=true) """
-
+result, fobj, state, rc_nodes = run_acopf_topology(system, topology; n1=true) 
+"""
 function run_acopf_topology(system::String,topology::Matrix{Int};
     rc::Bool=false,n1::Bool=false,
     drate::Float64=20.0,grate::Float64=10.0,yp::Int=1)  
@@ -44,8 +43,6 @@ function run_acopf_topology(system::String,topology::Matrix{Int};
     stages = size(topology,2)
     case = setup_case(system, rc, n1,
             Stage=stages,growth_rate=grate, d_rate=drate, years_stage=yp)
-        
-    # dict_result, objective, status, shunt comp
     if rc 
         result, fobj, state, rc_nodes, _ = solve_tnep_N1_idx_rc(case, topology)
     else
@@ -54,6 +51,7 @@ function run_acopf_topology(system::String,topology::Matrix{Int};
     return result, fobj, state, rc_nodes
 end
 
+
 """
     run_acopf_ag_topology(system::Dict, topology::Matrix{Int};
         rc::Bool=false, n1::Bool=false,
@@ -61,7 +59,7 @@ end
 
 Runs an **AC Optimal Power Flow (AC-OPF)** problem including *artificial generation (AG)* units,
 which represent virtual or flexible generation sources used to enhance system feasibility
-or simulate reinforcement actions.
+or simulate active power not supplied.
 
 This function extends `run_acopf_topology` by adding artificial generation buses and
 related constraints into the optimization model.
@@ -72,7 +70,7 @@ related constraints into the optimization model.
   activation per stage (1 = active, 0 = inactive).
 - `rc::Bool=false`: If `true`, includes the model with component replacement.
 - `n1::Bool=false`: If `true`, activates N-1 contingency constraints.
-- `drate::Float64=20.0`: Line dismantling or deactivation rate (%).
+- `drate::Float64=20.0`: Discount rate (%).
 - `grate::Float64=10.0`: Load or generation growth rate (%).
 - `yp::Int=1`: Number of years per planning stage.
 
@@ -81,7 +79,7 @@ A tuple with:
 1. `result` — Dictionary with the optimization results including AG variables.
 2. `fobj` — Objective value (including AG operation cost).
 3. `state` — Solver termination status (`MathOptInterface.TerminationStatusCode`).
-4. `rc_nodes` — Nodes replaced or updated (if `rc = true`).
+4. `rc_nodes` — Nodes and amounth of RC p.u. [MVAR].
 
 # Example
 ```julia
@@ -93,8 +91,8 @@ topology[9,1] = 1
 topology[11,1] = 1
 topology[14,1] = 2
 
-result, fobj, state, rc_nodes = run_acopf_ag_topology(system, topology; rc=true)"""
-
+result, fobj, state, rc_nodes = run_acopf_ag_topology(system, topology; rc=true)
+"""
 function run_acopf_ag_topology(system::String,topology::Matrix{Int};
     rc::Bool=false,n1::Bool=false,
     drate::Float64=20.0,grate::Float64=10.0,yp::Int=1)  
@@ -102,8 +100,6 @@ function run_acopf_ag_topology(system::String,topology::Matrix{Int};
     stages = size(topology,2)
     case = setup_case(system, rc, n1,
             Stage=stages,growth_rate=grate, d_rate=drate, years_stage=yp)
-
-    # dict_result, objective, status, shunt comp
     if rc 
         result, fobj, state, rc_nodes, _ = solve_tnep_N1_idx_rc_AP(case, topology)
     else
