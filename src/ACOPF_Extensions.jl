@@ -12,6 +12,7 @@ export run_acopf_topology, run_acopf_ag_topology
 
 include("main.jl")
 include("ex_fnc.jl")
+include("index.jl")
 # modeling the ac system
 include("operation/Repl_Mod.jl")
 include("operation/Objective.jl")
