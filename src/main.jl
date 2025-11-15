@@ -63,6 +63,21 @@ function run_acopf_topology(case::Dict,topology::Matrix{Int})
     return result, fobj, state, rc_nodes
 end
 
+function run_acopf_idx_topology(system::String,topology::Matrix{Int};
+    rc::Bool=false,n1::Bool=false,
+    drate::Float64=20.0,grate::Float64=10.0,yp::Int=1)  
+
+    stages = size(topology,2)
+    case = setup_case(system, rc, n1,
+            Stage=stages,growth_rate=grate, d_rate=drate, years_stage=yp)
+    if case["ReactiveCompensation"] 
+        result, fobj, state, rc_nodes, idx_node = solve_tnep_N1_idx_rc(case, topology)
+    else
+        result, fobj, state, rc_nodes, idx_node = solve_tnep_N1_idx_nrc(case, topology)
+    end
+    return result, fobj, state, rc_nodes, idx_node
+end
+
 function run_acopf_idx_topology(case::Dict,topology::Matrix{Int})  
     if case["ReactiveCompensation"] 
         result, fobj, state, rc_nodes, idx_node = solve_tnep_N1_idx_rc(case, topology)
