@@ -2,6 +2,7 @@ module ACOPF_Extensions
 
 import InfrastructureModels, PowerModels, PowerModelsACDC, Memento
 import JuMP, Ipopt
+import Graphs
 
 const _IM = InfrastructureModels
 const _PM = PowerModels 
