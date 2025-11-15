@@ -568,7 +568,7 @@ function solve_tnep_N1_rc(data::Dict, SolT::Matrix; subgra::Bool=false)
     return result["solution"]["nw"], result["objective"], result["termination_status"] , rcct
 end
 
-function solve_tnep_N1_idx_nrc_AP(data::Dict, SolT::Matrix; subgra::Bool=false)
+function solve_tnep_N1_nrc_AP(data::Dict, SolT::Matrix; subgra::Bool=false)
     Stage = size(SolT,2) 
     num_contingencies = data["Contingency"] ? length(data["N1contingency"]) : 0
     data = uncertain(data)
@@ -581,7 +581,7 @@ function solve_tnep_N1_idx_nrc_AP(data::Dict, SolT::Matrix; subgra::Bool=false)
     return result["solution"]["nw"], result["objective"], result["termination_status"] , rcct
 end
 
-function solve_tnep_N1_idx_rc_AP(data::Dict, SolT::Matrix; subgra::Bool=false) 
+function solve_tnep_N1_rc_AP(data::Dict, SolT::Matrix; subgra::Bool=false) 
     Stage = size(SolT,2)
     num_contingencies = data["Contingency"] ? length(data["N1contingency"]) : 0
     data = uncertain(data)
