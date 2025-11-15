@@ -256,8 +256,8 @@ function extract_idx(data, result, Stage; calcular_subgrafos = false)
             node_N_Is, node_N_Is_r = filtrar_nodos_aislados(nodes)
             N = length(node_N_Is)
             Mat_ad, Mat_ad_dir, Mat_dig = construir_matrices_adyacencia(nodes, node_N_Is_r, N)
-            gra = SimpleGraph(Mat_ad)
-            gra_dir = SimpleDiGraph(Mat_ad_dir)
+            gra = Graphs.SimpleGraph(Mat_ad)
+            gra_dir = Graphs.SimpleDiGraph(Mat_ad_dir)
 
             # índices
             if calcular_subgrafos
