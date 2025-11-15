@@ -514,7 +514,6 @@ function extract_rc_nodes(data::Dict, solution::Dict, Stage::Int)
     return RCCt
 end
 
-
 function solve_tnep_N1_idx_nrc(data::Dict, SolT::Matrix; subgra::Bool=false)
     Stage = size(SolT,2) 
     num_contingencies = data["Contingency"] ? length(data["N1contingency"]) : 0
@@ -543,6 +542,32 @@ function solve_tnep_N1_idx_rc(data::Dict, SolT::Matrix; subgra::Bool=false)
     return result["solution"]["nw"], result["objective"], result["termination_status"] , rcct, indx_nodes
 end
 
+function solve_tnep_N1_nrc(data::Dict, SolT::Matrix; subgra::Bool=false)
+    Stage = size(SolT,2) 
+    num_contingencies = data["Contingency"] ? length(data["N1contingency"]) : 0
+    data = uncertain(data)
+    dataR = replicate_modify_N1(data ,num_contingencies, Stage, Set(["time_series", "per_unit"]),SolT)
+    pm = instantiate_model(dataR, _PM.ACPPowerModel, build_opftnep_N1_nrcT_nAP, ref_add_core_N1!, Set(["time_series", "per_unit"]),_PM.pm_it_sym
+    ;ref_extensions = [add_ref_dcgridN1!])
+    result = optimize_model!(pm, relax_integrality=false, optimizer=data["solver_Us"], solution_processors=[])
+    rcct = Dict()
+
+    return result["solution"]["nw"], result["objective"], result["termination_status"] , rcct
+end
+
+function solve_tnep_N1_rc(data::Dict, SolT::Matrix; subgra::Bool=false) 
+    Stage = size(SolT,2)
+    num_contingencies = data["Contingency"] ? length(data["N1contingency"]) : 0
+    data = uncertain(data)
+    dataR = replicate_modify_N1(data ,num_contingencies, Stage, Set(["time_series", "per_unit"]),SolT)
+    pm = instantiate_model(dataR, _PM.ACPPowerModel, build_opftnep_N1_rcT_nAP, ref_add_core_N1!, Set(["time_series", "per_unit"]),_PM.pm_it_sym
+    ;ref_extensions = [add_ref_COMP_N1!,add_ref_dcgridN1!])
+    result = optimize_model!(pm, relax_integrality=false, optimizer=data["solver_Us"], solution_processors=[])
+    rcct = extract_rc_nodes(data, result["solution"]["nw"], Stage)
+    
+    return result["solution"]["nw"], result["objective"], result["termination_status"] , rcct
+end
+
 function solve_tnep_N1_idx_nrc_AP(data::Dict, SolT::Matrix; subgra::Bool=false)
     Stage = size(SolT,2) 
     num_contingencies = data["Contingency"] ? length(data["N1contingency"]) : 0
@@ -551,10 +576,9 @@ function solve_tnep_N1_idx_nrc_AP(data::Dict, SolT::Matrix; subgra::Bool=false)
     pm = instantiate_model(dataR, _PM.ACPPowerModel, build_opftnep_N1_nrcT, ref_add_core_N1!, Set(["time_series", "per_unit"]),_PM.pm_it_sym
     ;ref_extensions = [add_ref_dcgridN1!, add_ref_ARTCOMP_N1!])
     result = optimize_model!(pm, relax_integrality=false, optimizer=data["solver_Us"], solution_processors=[])
-    indx_nodes = extract_idx(dataR["nw"], result["solution"]["nw"], Stage, calcular_subgrafos=subgra)
     rcct = Dict()
 
-    return result["solution"]["nw"], result["objective"], result["termination_status"] , rcct, indx_nodes
+    return result["solution"]["nw"], result["objective"], result["termination_status"] , rcct
 end
 
 function solve_tnep_N1_idx_rc_AP(data::Dict, SolT::Matrix; subgra::Bool=false) 
@@ -565,10 +589,9 @@ function solve_tnep_N1_idx_rc_AP(data::Dict, SolT::Matrix; subgra::Bool=false)
     pm = instantiate_model(dataR, _PM.ACPPowerModel, build_opftnep_N1_rcT, ref_add_core_N1!, Set(["time_series", "per_unit"]),_PM.pm_it_sym
     ;ref_extensions = [add_ref_COMP_N1!,add_ref_dcgridN1!,add_ref_ARTCOMP_N1!])
     result = optimize_model!(pm, relax_integrality=false, optimizer=data["solver_Us"], solution_processors=[])
-    indx_nodes = extract_idx(dataR["nw"], result["solution"]["nw"], Stage, calcular_subgrafos=subgra)
     rcct = extract_rc_nodes(data, result["solution"]["nw"], Stage)
     
-    return result["solution"]["nw"], result["objective"], result["termination_status"] , rcct, indx_nodes
+    return result["solution"]["nw"], result["objective"], result["termination_status"] , rcct
 end
 
 function uncertain(sn_data::Dict)

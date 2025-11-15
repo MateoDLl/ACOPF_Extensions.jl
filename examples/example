@@ -32,3 +32,8 @@ result1_ag, fobj1_ag, state1_ag, rc1_ag = run_acopf_ag_topology(system2, topolog
 println("Objective value: ", fobj1_ag)
 println("Optimization state: ", state1_ag)
 println("Reactive compensation: ", rc1_ag)
+
+result1, fobj1, state1, rc1, idxn = run_acopf_idx_topology(system2, topology; rc=false)
+println("Objective value: ", fobj1_ag)
+println("Optimization state: ", state1_ag)
+println("Index Nodes: ", idxn)
