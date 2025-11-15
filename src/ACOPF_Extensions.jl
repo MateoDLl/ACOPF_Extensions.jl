@@ -8,7 +8,7 @@ const _PM = PowerModels
 const _PMACDC = PowerModelsACDC
 const _LOGGER = Memento.getlogger(@__MODULE__)
 
-export run_acopf_topology, run_acopf_ag_topology
+export run_acopf_topology, run_acopf_ag_topology, run_acopf_idx_topology
 
 include("main.jl")
 include("ex_fnc.jl")
