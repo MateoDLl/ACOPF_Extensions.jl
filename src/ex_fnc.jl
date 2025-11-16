@@ -1,13 +1,10 @@
 function setup_case(namefile::String, reactive::Bool, contingency::Bool;
     Stage::Int=1,growth_rate::Float64=20.0, d_rate::Float64=10.0, years_stage::Int=1)
     
-    Memento.setlevel!(Memento.getlogger(PowerModels), "error")
-    Memento.setlevel!(Memento.getlogger(PowerModelsACDC), "error")
-    _PM.silence()
- 
-    
+    silence_acopf_logs()
+
     case_data = PowerModels.parse_file(namefile * ".m")
-    #PowerModelsACDC.process_additional_data!(case_data)
+    PowerModelsACDC.process_additional_data!(case_data)
 
     case_data["ReactiveCompensation"] = reactive
     case_data["Contingency"] = contingency
@@ -68,4 +65,10 @@ function Calculate_Mat_Cost(data::Dict)
         end
     end 
     return Matrx_cost
+end
+
+function silence_acopf_logs()
+    Memento.setlevel!(Memento.getlogger(PowerModels), "error")
+    Memento.setlevel!(Memento.getlogger(PowerModelsACDC), "error")
+    _PM.silence()
 end
