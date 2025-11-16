@@ -7,7 +7,7 @@ function setup_case(namefile::String, reactive::Bool, contingency::Bool;
  
     
     case_data = PowerModels.parse_file(namefile * ".m")
-    PowerModelsACDC.process_additional_data!(case_data)
+    #PowerModelsACDC.process_additional_data!(case_data)
 
     case_data["ReactiveCompensation"] = reactive
     case_data["Contingency"] = contingency
