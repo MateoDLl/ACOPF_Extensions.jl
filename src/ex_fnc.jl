@@ -1,9 +1,9 @@
 function setup_case(namefile::String, reactive::Bool, contingency::Bool;
     Stage::Int=1,growth_rate::Float64=20.0, d_rate::Float64=10.0, years_stage::Int=1)
 
-    Memento.setlevel!(Memento.getlogger(PowerModels), "error")
-    Memento.setlevel!(Memento.getlogger(PowerModelsACDC), "error")
-    _PM.silence()
+    @everywhere Memento.setlevel!(Memento.getlogger(PowerModels), "error")
+    @everywhere Memento.setlevel!(Memento.getlogger(PowerModelsACDC), "error")
+    @everywhere _PM.silence()
     case_data = PowerModels.parse_file(namefile * ".m")
     PowerModelsACDC.process_additional_data!(case_data)
 
