@@ -2,6 +2,7 @@ module ACOPF_Extensions
 
 import InfrastructureModels, PowerModels, PowerModelsACDC, Memento
 import JuMP, Ipopt
+import StatsBase: mean, std
 import Graphs
 
 const _IM = InfrastructureModels
