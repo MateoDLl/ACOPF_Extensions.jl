@@ -223,10 +223,10 @@ function calcular_indices_globales(grafo, grafo_dir, Mat_ad_dir, node_N_Is, nodo
     end
     # Cálculo de errores relativos
     PagerankI = ifelse.(Pagerank .== 0, 1.0, 0.0)
-    EigenvectorI = ifelse.(EigenvectorI .== 0, 1.0, 0.0)
-    BetweenessI = ifelse.(BetweenessI .== 0, 1.0, 0.0)
-    HubsI       = ifelse.(HubsI .== 0, 1.0, 0.0)
-    AutorI      = ifelse.(AutorI .== 0, 1.0, 0.0)
+    EigenvectorI = ifelse.(Eigenvector .== 0, 1.0, 0.0)
+    BetweenessI = ifelse.(Betweeness .== 0, 1.0, 0.0)
+    HubsI       = ifelse.(Hubs .== 0, 1.0, 0.0)
+    AutorI      = ifelse.(Autor .== 0, 1.0, 0.0)
 
     Pagerank = rel_error(Pagerank, nodos_inicial)+PagerankI
     Eigenvector = rel_error(Eigenvector, nodos_inicial)+EigenvectorI
