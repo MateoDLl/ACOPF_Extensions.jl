@@ -222,17 +222,17 @@ function calcular_indices_globales(grafo, grafo_dir, Mat_ad_dir, node_N_Is, nodo
         Autor[j]        = auth[i]
     end
     # Cálculo de errores relativos
-    # PagerankI = ifelse.(Pagerank .== 0, 1.0, 0.0)
-    # EigenvectorI = ifelse.(EigenvectorI .== 0, 1.0, 0.0)
-    # BetweenessI = ifelse.(BetweenessI .== 0, 1.0, 0.0)
-    # HubsI       = ifelse.(HubsI .== 0, 1.0, 0.0)
-    # AutorI      = ifelse.(AutorI .== 0, 1.0, 0.0)
+    PagerankI = ifelse.(Pagerank .== 0, 1.0, 0.0)
+    EigenvectorI = ifelse.(EigenvectorI .== 0, 1.0, 0.0)
+    BetweenessI = ifelse.(BetweenessI .== 0, 1.0, 0.0)
+    HubsI       = ifelse.(HubsI .== 0, 1.0, 0.0)
+    AutorI      = ifelse.(AutorI .== 0, 1.0, 0.0)
 
-    # Pagerank = rel_error(Pagerank, nodos_inicial)+PagerankI
-    # Eigenvector = rel_error(Eigenvector, nodos_inicial)+EigenvectorI
-    # Betweeness = rel_error(Betweeness, nodos_inicial)+BetweenessI
-    # Hubs = rel_error(Hubs, nodos_inicial)+HubsI
-    # Autor = rel_error(Autor, nodos_inicial)+AutorI
+    Pagerank = rel_error(Pagerank, nodos_inicial)+PagerankI
+    Eigenvector = rel_error(Eigenvector, nodos_inicial)+EigenvectorI
+    Betweeness = rel_error(Betweeness, nodos_inicial)+BetweenessI
+    Hubs = rel_error(Hubs, nodos_inicial)+HubsI
+    Autor = rel_error(Autor, nodos_inicial)+AutorI
     return Pagerank, Eigenvector, Betweeness, Hubs, Autor
 end
 
