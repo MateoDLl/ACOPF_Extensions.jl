@@ -288,7 +288,9 @@ function submat_adjacency(Mat_ad, ver_subgraph)
 end
 
 function rel_error(vector, nod)
-    vector_rel = (((((1 / nod) .- vector).^2)./nod).^0.5) ./ (1 / nod)
+    # vector_rel = (((((1 / nod) .- vector).^2)./nod).^0.5) ./ (1 / nod)
+    vector_rel = nod.*abs.((1 / nod) .- vector)
+    vector_rel = tanh.(1*vector_rel)
     return vector_rel
 end
 
