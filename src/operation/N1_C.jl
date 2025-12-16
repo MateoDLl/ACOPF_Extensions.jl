@@ -514,6 +514,24 @@ function extract_rc_nodes(data::Dict, solution::Dict, Stage::Int)
     return RCCt
 end
 
+function extract_ag_power(data::Dict, solution::Dict, Stage::Int)
+    Apg = 0.0
+    for k in 1:Stage
+        RCqg = Dict{Int64, Float64}()
+        for ctg in data["n_copies"]
+            comps = solution[string(ctg)][string(k)]["art_act"]
+            for (id, val) in comps
+                Apg_val = val["ARpg"]
+                if Apg_val > 0.0
+                    bus_gen = data["art_act"][id]["bus_gen"]
+                    RCqg[bus_gen] +=  Apg_val
+                end
+            end
+        end
+    end
+    return Apg
+end
+
 function solve_tnep_N1_idx_nrc(data::Dict, SolT::Matrix; subgra::Bool=false)
     Stage = size(SolT,2) 
     num_contingencies = data["Contingency"] ? length(data["N1contingency"]) : 0
@@ -577,8 +595,8 @@ function solve_tnep_N1_nrc_AP(data::Dict, SolT::Matrix; subgra::Bool=false)
     ;ref_extensions = [add_ref_dcgridN1!, add_ref_ARTCOMP_N1!])
     result = optimize_model!(pm, relax_integrality=false, optimizer=data["solver_Us"], solution_processors=[])
     rcct = Dict()
-
-    return result["solution"]["nw"], result["objective"], result["termination_status"] , rcct
+    agp = extract_ag_power(data, result["solution"]["nw"], Stage)
+    return result["solution"]["nw"], result["objective"], result["termination_status"] , rcct, agp
 end
 
 function solve_tnep_N1_rc_AP(data::Dict, SolT::Matrix; subgra::Bool=false) 
@@ -590,8 +608,8 @@ function solve_tnep_N1_rc_AP(data::Dict, SolT::Matrix; subgra::Bool=false)
     ;ref_extensions = [add_ref_COMP_N1!,add_ref_dcgridN1!,add_ref_ARTCOMP_N1!])
     result = optimize_model!(pm, relax_integrality=false, optimizer=data["solver_Us"], solution_processors=[])
     rcct = extract_rc_nodes(data, result["solution"]["nw"], Stage)
-    
-    return result["solution"]["nw"], result["objective"], result["termination_status"] , rcct
+    agp = extract_ag_power(data, result["solution"]["nw"], Stage)
+    return result["solution"]["nw"], result["objective"], result["termination_status"] , rcct, agp
 end
 
 function uncertain(sn_data::Dict)
