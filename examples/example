@@ -29,10 +29,11 @@ println("Objective value: ", fobj1)
 println("Optimization state: ", state1)
 println("Reactive compensation: ", rc1)
 
-result1_ag, fobj1_ag, state1_ag, rc1_ag = run_acopf_ag_topology(system2, topology; rc=false)
+result1_ag, fobj1_ag, state1_ag, rc1_ag, ag1_p = run_acopf_ag_topology(system2, topology; rc=false)
 println("Objective value: ", fobj1_ag)
 println("Optimization state: ", state1_ag)
 println("Reactive compensation: ", rc1_ag)
+println("Artificial power: ", ag1_p)
 
 result1, fobj1, state1, rc1, idxn = run_acopf_idx_topology(system2, topology; rc=false)
 println("Objective value: ", fobj1_ag)

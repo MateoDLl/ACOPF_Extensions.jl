@@ -523,7 +523,7 @@ function extract_ag_power(data::Dict, solution::Dict, Stage::Int)
             for (id, val) in comps
                 Apg_val = val["ARpg"]
                 if Apg_val > 0.0
-                    bus_gen = data["art_act"][id]["bus_gen"]
+                    bus_gen = data["art_act"][id]["bus_art"]
                     RCqg[bus_gen] +=  Apg_val
                 end
             end
