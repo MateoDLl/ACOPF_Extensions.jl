@@ -56,7 +56,7 @@ function objective_min_cost_RCN1(pm::_PM.AbstractPowerModel)
         cst_exp +
         sum(gen_cost_max[n_i] for n_i in keys(gen_cost_max)) +
         sum(comp_cost_max[n_i] for n_i in keys(comp_cost_max)) +
-        art_penalt
+        art_penalty
     )    
 end
 
