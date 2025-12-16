@@ -521,9 +521,9 @@ function extract_ag_power(data::Dict, solution::Dict, Stage::Int)
             comps = solution[string(ctg)][string(k)]["art_act"]
             for (id, val) in comps
                 Apg_val = val["ARpg"]
-                if Apg_val > 0.0
+                #if Apg_val > 0.0
                     Apg +=  Apg_val
-                end
+                #end
             end
         end
     end
