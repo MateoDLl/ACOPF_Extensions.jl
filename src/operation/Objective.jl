@@ -41,15 +41,15 @@ function objective_min_cost_RCN1(pm::_PM.AbstractPowerModel)
 
     # Define a max value
     for (km, _) in _PM.nws(pm)
-        for n_i in keys(gen_cost[km])
-            JuMP.@constraint(pm.model, gen_cost_max[n_i] >= gen_cost[km][n_i])
-        end
+        #for n_i in keys(gen_cost[km])
+        #    JuMP.@constraint(pm.model, gen_cost_max[n_i] >= gen_cost[km][n_i])
+        #end
         for n_i in keys(comp_cost[km])
             JuMP.@constraint(pm.model, comp_cost_max[n_i] >= comp_cost[km][n_i])
         end
-        for n_i in keys(art_penalty[km])
-            JuMP.@constraint(pm.model, art_penalty_max[n_i] >= art_penalty[km][n_i])
-        end
+        #for n_i in keys(art_penalty[km])
+        #    JuMP.@constraint(pm.model, art_penalty_max[n_i] >= art_penalty[km][n_i])
+        #end
     end
 
     if length(pm.data["n_copies"]) > 1
@@ -59,9 +59,9 @@ function objective_min_cost_RCN1(pm::_PM.AbstractPowerModel)
     end
     JuMP.@objective(pm.model, Min,
         cst_exp +
-        sum(gen_cost_max[n_i] for n_i in keys(gen_cost_max)) +
+        sum(gen_cost[n_i] for n_i in keys(gen_cost)) +
         sum(comp_cost_max[n_i] for n_i in keys(comp_cost_max)) +
-        sum(art_penalty_max[n_i] for n_i in keys(art_penalty_max))
+        sum(art_penalty[n_i] for n_i in keys(art_penalty))
     )    
 end
 
@@ -113,8 +113,8 @@ function objective_min_cost_RCN1_nrc(pm::_PM.AbstractPowerModel)
 
     JuMP.@objective(pm.model, Min,
         cst_exp +
-        sum(gen_cost_max[n_i] for n_i in keys(gen_cost_max)) +
-        sum(art_penalty_max[n_i] for n_i in keys(art_penalty_max))
+        sum(gen_cost[n_i] for n_i in keys(gen_cost)) +
+        sum(art_penalty[n_i] for n_i in keys(art_penalty))
     )
 end
 
@@ -157,7 +157,7 @@ function objective_min_cost_RCN1_nRC_nAP(pm::_PM.AbstractPowerModel)
     end
     JuMP.@objective(pm.model, Min,
         cst_exp +
-        sum(gen_cost_max[n_i] for n_i in keys(gen_cost_max))
+        sum(gen_cost[n_i] for n_i in keys(gen_cost))
     )    
 end
 
@@ -208,7 +208,7 @@ function objective_min_cost_RCN1_nAP(pm::_PM.AbstractPowerModel)
     end
     JuMP.@objective(pm.model, Min,
         cst_exp +
-        sum(gen_cost_max[n_i] for n_i in keys(gen_cost_max)) +
+        sum(gen_cost[n_i] for n_i in keys(gen_cost)) +
         sum(comp_cost_max[n_i] for n_i in keys(comp_cost_max))
     )
 end
