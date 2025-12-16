@@ -517,14 +517,12 @@ end
 function extract_ag_power(data::Dict, solution::Dict, Stage::Int)
     Apg = 0.0
     for k in 1:Stage
-        RCqg = Dict{Int64, Float64}()
         for ctg in data["n_copies"]
             comps = solution[string(ctg)][string(k)]["art_act"]
             for (id, val) in comps
                 Apg_val = val["ARpg"]
                 if Apg_val > 0.0
-                    bus_gen = data["art_act"][id]["bus_art"]
-                    RCqg[bus_gen] +=  Apg_val
+                    Apg +=  Apg_val
                 end
             end
         end
