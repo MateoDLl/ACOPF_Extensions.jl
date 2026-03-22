@@ -272,7 +272,21 @@ function extract_idx(data, result, Stage; calcular_subgrafos = false)
             id_pf = powerFlow(nodes["N"])
             id_over = calc_id_overload(branches, [nodes["N"][i]["Nd_dir"] for i in 1:length(nodes["N"])], length(nodes["N"]))
             Index_Mat = hcat(Pagerank, Eigenvector, Betweeness, Autor, Hubs, id_over, id_pf[1])
-            Index_Stage[parse(Int, stg)] = Index_Mat
+
+            # Normalize features (VERY important)
+            X = copy(Index_Mat)
+            μ = mean(X, dims=1)
+            σ = std(X, dims=1) .+ 1e-8
+            X_norm = (X .- μ) ./ σ
+
+            # Apply k-means (k = 3 → safe, neutral, risky)
+            k = 3
+            R = kmeans(X_norm', k)   # NOTE: Clustering.jl expects features in columns
+
+            labels = R.assignments   # vector of size N
+            centroids = R.centers'
+
+            Index_Stage[parse(Int, stg)] = hcat(Index_Mat, R)
         end
 
         Index_Contingencias[scn] = Index_Stage

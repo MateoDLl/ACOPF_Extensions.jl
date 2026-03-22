@@ -4,6 +4,7 @@ import InfrastructureModels, PowerModels, PowerModelsACDC, Memento
 import JuMP, Ipopt
 import StatsBase: mean, std
 import Graphs
+import Clustering: kmeans
 
 const _IM = InfrastructureModels
 const _PM = PowerModels 
