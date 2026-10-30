@@ -219,22 +219,22 @@ function add_ref_dcgridN1!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any})
                             ref_buses_dc["$k"] = v
                         end
                     end
-                    Memento.warn(_PM._LOGGER, "no reference DC bus found, setting reference bus based on AC bus type")
+                    @warn("no reference DC bus found, setting reference bus based on AC bus type")
                 end
 
                 for (k,conv) in nw_ref[:convdc]
                     conv_id = conv["index"]
                     if conv["type_ac"] == 2 && conv["type_dc"] == 1
-                        Memento.warn(_PM._LOGGER, "For converter $conv_id is chosen P is fixed on AC and DC side. This can lead to infeasibility in the PF problem.")
+                        @warn("For converter $conv_id is chosen P is fixed on AC and DC side. This can lead to infeasibility in the PF problem.")
                     elseif conv["type_ac"] == 1 && conv["type_dc"] == 1
-                        Memento.warn(_PM._LOGGER, "For converter $conv_id is chosen P is fixed on AC and DC side. This can lead to infeasibility in the PF problem.")
+                        @warn("For converter $conv_id is chosen P is fixed on AC and DC side. This can lead to infeasibility in the PF problem.")
                     end
                     convbus_ac = conv["busac_i"]
                     if conv["Vmmax"] < nw_ref[:bus][convbus_ac]["vmin"]
-                        Memento.warn(_PM._LOGGER, "The maximum AC side voltage of converter $conv_id is smaller than the minimum AC bus voltage")
+                        @warn("The maximum AC side voltage of converter $conv_id is smaller than the minimum AC bus voltage")
                     end
                     if conv["Vmmin"] > nw_ref[:bus][convbus_ac]["vmax"]
-                        Memento.warn(_PM._LOGGER, "The miximum AC side voltage of converter $conv_id is larger than the maximum AC bus voltage")
+                        @warn("The minimum AC side voltage of converter $conv_id is larger than the maximum AC bus voltage")
                     end
                 end
 
@@ -243,7 +243,7 @@ function add_ref_dcgridN1!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any})
                     for (rb) in keys(ref_buses_dc)
                         ref_buses_warn = ref_buses_warn*rb*", "
                     end
-                    Memento.warn(_PM._LOGGER, "multiple reference buses found, i.e. "*ref_buses_warn*"this can cause infeasibility if they are in the same connected component")
+                    @warn("multiple reference buses found, i.e. "*ref_buses_warn*"this can cause infeasibility if they are in the same connected component")
                 end
                 nw_ref[:ref_buses_dc] = ref_buses_dc
                 nw_ref[:buspairsdc] = _PMACDC.buspair_parameters_dc(nw_ref[:arcs_dcgrid_from], nw_ref[:branchdc], nw_ref[:busdc])
