@@ -274,7 +274,7 @@ function extract_idx(data, result, Stage; calcular_subgrafos = false)
             Index_Mat = hcat(Pagerank, Eigenvector, Betweeness, Autor, Hubs, id_over, id_pf[1])
 
             # Normalize features (VERY important)
-            X = copy(Index_Mat)
+            X = copy(hcat(Index_Mat[:,1:2],Index_Mat[:,6:7]))  # Only centrality and power flow features
             μ = mean(X, dims=1)
             σ = std(X, dims=1) .+ 1e-8
             X_norm = (X .- μ) ./ σ
@@ -286,7 +286,7 @@ function extract_idx(data, result, Stage; calcular_subgrafos = false)
             labels = R.assignments   # vector of size N
             centroids = R.centers'
 
-            Index_Stage[parse(Int, stg)] = hcat(Index_Mat, R)
+            Index_Stage[parse(Int, stg)] = hcat(Index_Mat, labels, centroids[labels, :])
         end
 
         Index_Contingencias[scn] = Index_Stage
